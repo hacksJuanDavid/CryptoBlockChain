@@ -101,27 +101,32 @@ class Blockchain:
     def get_previous_hash(self):
         # Return previous hash
         return self.get_previous_block()["hash"]
+    
+    # Function for get all blocks with user id
+    def get_blocks_with_user_id(self, user_id):
+        # Return blocks with user id
+        return [block for block in self.chain if block["data"]["user_id"] == user_id]
 
     # Function for test blockchain
     def test(self):
         # Create new block
         self.create_block(
             proof=self.proof_of_work(self.get_previous_block()["proof"]),
-            data={"user_id": "nID", "operation_type": "buy", "stock_name": "AAPL"},
+            data={"user_id": "nID", "operation_type": "buy", "stock_name": "AAPL", "quantity": 10, "price": 150.00},
             previous_hash=self.get_previous_hash(),
         )
 
         # Create new block
         self.create_block(
             proof=self.proof_of_work(self.get_previous_block()["proof"]),
-            data={"user_id": "nID", "operation_type": "buy", "stock_name": "AAPL"},
+            data={"user_id": "nID", "operation_type": "buy", "stock_name": "AAPL", "quantity": 10, "price": 150.00},
             previous_hash=self.get_previous_hash(),
         )
 
         # Create new block
         self.create_block(
             proof=self.proof_of_work(self.get_previous_block()["proof"]),
-            data={"user_id": "nID", "operation_type": "buy", "stock_name": "AAPL"},
+            data={"user_id": "nID", "operation_type": "sell", "stock_name": "AAPL", "quantity": 10, "price": 150.00},
             previous_hash=self.get_previous_hash(),
         )
 
