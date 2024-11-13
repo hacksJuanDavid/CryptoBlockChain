@@ -30,7 +30,7 @@ class LoginUser:
         # Verify the password by hashing
         if verified:
             print("User logged in successfully")
-            return True
+            return user.get("user_uuid")
         else:
             print("Incorrect password")
             return False
