@@ -47,7 +47,7 @@ Durante el desarrollo del proyecto, se empleará y documentará la metodología 
         El cliente debe recibir y almacenar el ID de usuario asignado por el servidor.
 
     Envío de Transacciones
-        La solicitud de regsistro de transacciones requiere que el cliente se haya registrado.
+        La solicitud de registro de transacciones requiere que el cliente se haya registrado.
         El cliente debe enviar órdenes de compra de acciones cifradas con la clave pública del servidor, a partir de información en formato JSON.
         Las transacciones se basarán en el número de ID del cliente, el tipo de operación (compra/venta) y el nombre de la acción.
         El cliente debe asegurar que las transacciones se transmitan de manera segura.
@@ -85,7 +85,7 @@ Durante el desarrollo del proyecto, se empleará y documentará la metodología 
 
     Lenguaje de Programación
         Se usará Python como lenguaje de programación, bajo el paradigma POO.
-        La comunicación entre clienet y servidor estará basada en sockets.
+        La comunicación entre cliente y servidor estará basada en sockets.
         Está permitido el uso de librerias en Python que generen valor al proyecto.
 ```
 
