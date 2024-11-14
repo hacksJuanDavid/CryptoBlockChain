@@ -17,63 +17,67 @@ Durante el desarrollo del proyecto, se empleará y documentará la metodología 
 
 ```
     Generación de Claves Pública y Privada
-        El servidor debe generar un par de claves pública-privada para la comunicación segura. Para ello se espera que Usted emplee servicios de PKI disponible en el lenguaje de su elección.
-        El servidor debe proporcionar su clave pública a los clientes que la soliciten.
+        [x] El servidor debe generar un par de claves pública-privada para la comunicación segura. Para ello se espera que Usted emplee servicios de PKI disponible en el lenguaje de su elección.
+        [x] El servidor debe proporcionar su clave pública a los clientes que la soliciten.
 
     Registro de Usuario
-        El servidor debe aceptar solicitudes de registro por parte de los clientes, cuyo contenido será cifrado con la clave pública del servidor.
-        El servidor debe desencriptar las solicitudes de registro, almacenar la clave pública del cliente y asignar un ID de usuario único.
+        [x] El servidor debe aceptar solicitudes de registro por parte de los clientes, cuyo contenido será cifrado con la clave pública del servidor.
+        [x] El servidor debe desencriptar las solicitudes de registro, almacenar la clave pública del cliente y asignar un ID de usuario único.
 
     Manejo de Transacciones
-        El servidor debe recibir órdenes de compra o venta de acciones por parte de los clientes.
-        El servidor debe validar y agregar las transacciones al libro mayor basado en blockchain.
-        Las transacciones se basarán en el número de ID del cliente, el tipo de operación (compra/venta) y el nombre de la acción.
+        [x] El servidor debe recibir órdenes de compra o venta de acciones por parte de los clientes.
+        [x] El servidor debe validar y agregar las transacciones al libro mayor basado en blockchain.
+        [x] Las transacciones se basarán en el número de ID del cliente, el tipo de operación (compra/venta) y el nombre de la acción.
 
     Gestión del Libro Mayor
-        El servidor debe mantener y gestionar el libro mayor basado en blockchain.
-        El servidor debe proporcionar una copia de las transacciones realizadas para un usuario en particular, a solicitud.
-        El servidor debe verificar y confirmar la integridad de todo el libro mayor a solicitud del cliente.
+        [x] El servidor debe mantener y gestionar el libro mayor basado en blockchain.
+        [x] El servidor debe proporcionar una copia de las transacciones realizadas para un usuario en particular, a solicitud.
+        [x] El servidor debe verificar y confirmar la integridad de todo el libro mayor a solicitud del cliente.
+
+    Conexion
+        [] El servidor debe de generar una conexion utilizando sockets
+        [] El servidor debe de permitir conectar a los clientes mediante la exposicion del socket
 ```
 
 ## Cliente
 
 ```
     Manejo de Claves
-        El cliente debe solicitar y almacenar la clave pública del servidor.
-        El cliente debe generar su propio par de claves pública-privada para la comunicación segura.
+        [] El cliente debe solicitar y almacenar la clave pública del servidor.
+        [] El cliente debe generar su propio par de claves pública-privada para la comunicación segura.
 
     Registro
-        El cliente debe enviar una solicitud de registro al servidor cifrada con la clave pública del servidor, incluyendo la clave pública del cliente.
-        El cliente debe recibir y almacenar el ID de usuario asignado por el servidor.
+        [] El cliente debe enviar una solicitud de registro al servidor cifrada con la clave pública del servidor, incluyendo la clave pública del cliente.
+        [] El cliente debe recibir y almacenar el ID de usuario asignado por el servidor.
 
     Envío de Transacciones
-        La solicitud de registro de transacciones requiere que el cliente se haya registrado.
-        El cliente debe enviar órdenes de compra de acciones cifradas con la clave pública del servidor, a partir de información en formato JSON.
-        Las transacciones se basarán en el número de ID del cliente, el tipo de operación (compra/venta) y el nombre de la acción.
-        El cliente debe asegurar que las transacciones se transmitan de manera segura.
+        [] La solicitud de registro de transacciones requiere que el cliente se haya registrado.
+        [] El cliente debe enviar órdenes de compra de acciones cifradas con la clave pública del servidor, a partir de información en formato JSON.
+        [] Las transacciones se basarán en el número de ID del cliente, el tipo de operación (compra/venta) y el nombre de la acción.
+        [] El cliente debe asegurar que las transacciones se transmitan de manera segura.
 
     Verificación del Libro Mayor
-        El cliente puede solicitar y recibir una copia de sus propias transacciones.
-        El cliente puede solicitar una verificación de la integridad de todo el libro mayor.
+        [] El cliente puede solicitar y recibir una copia de sus propias transacciones.
+        [] El cliente puede solicitar una verificación de la integridad de todo el libro mayor.
 ```
 
 ## Requisitos No Funcionales
 
 ```
     Seguridad
-        El sistema debe usar algoritmos criptográficos fuertes para la generación y el cifrado de claves.
-        Todas las comunicaciones entre clientes y el servidor deben estar cifradas.
+        [] El sistema debe usar algoritmos criptográficos fuertes para la generación y el cifrado de claves.
+        [] Todas las comunicaciones entre clientes y el servidor deben estar cifradas.
 
     Rendimiento
-        El servidor debe manejar peticiones de múltiples de clientes.
+        [] El servidor debe manejar peticiones de múltiples de clientes.
 
     Persistencia
-        El servidor puede emplear un sistema de archivos o un SMBD para el almacenamiento del libro.
+        [] El servidor puede emplear un sistema de archivos o un SMBD para el almacenamiento del libro.
 
     Usabilidad
-        El cliente debe tener una interfaz CLI, que soporte la adecuada operación.
-        Los nombres de comandos sugeridos para el cliente son: getKey register add copy verify
-        El cliente y el servidor deben proporcionar mensajes de error claros y retroalimentación a la operación.
+        [] El cliente debe tener una interfaz CLI, que soporte la adecuada operación.
+        [] Los nombres de comandos sugeridos para el cliente son: getKey register add copy verify
+        [] El cliente y el servidor deben proporcionar mensajes de error claros y retroalimentación a la operación.
 ```
 
 ## Restricciones Tecnológicas
