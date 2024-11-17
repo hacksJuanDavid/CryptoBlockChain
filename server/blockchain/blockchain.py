@@ -23,7 +23,6 @@ class Blockchain:
         }
         # Add hash to block
         block["hash"] = self.hash_block(block)
-
         # Add block to chain
         self.chain.append(block)
         return block
@@ -45,12 +44,14 @@ class Blockchain:
                 check_proof = True
             else:
                 new_proof += 1
+        # Return new_proof
         return new_proof
 
     # Function for hash block
     def hash_block(self, block):
         # Hash block with sort keys
         encoded_block = json.dumps(block, sort_keys=True).encode()
+        # Return hash block
         return hashlib.sha256(encoded_block).hexdigest()
 
     # Function for is chain valid
@@ -80,12 +81,23 @@ class Blockchain:
             previous_block = block
             # Increment block_index
             block_index += 1
+        # Return True
         return True
 
     # Function for add block
     def add_block(self, block):
         # Add block to chain
         self.chain.append(block)
+
+    # Function for display blockchain
+    def display_blockchain(self):
+        # Print
+        print("")
+        print("------------*Blockchain*------------")
+        # Print blockchain
+        print(json.dumps(self.get_chain(), sort_keys=True, indent=4))
+        print("------------*****************************------------")
+        print("")
 
     # Function for get last block
     def get_previous_block(self):
@@ -101,32 +113,66 @@ class Blockchain:
     def get_previous_hash(self):
         # Return previous hash
         return self.get_previous_block()["hash"]
-    
-    # Function for get all blocks with user id
+
+    # Function to get all blocks with a specific user ID
     def get_blocks_with_user_id(self, user_id):
-        # Return blocks with user id
-        return [block for block in self.chain if block["data"]["user_id"] == user_id]
+        # Ensure all blocks have the expected structure
+        valid_blocks = [
+            block
+            for block in self.chain
+            if isinstance(block, dict)
+            and "data" in block
+            and "user_id" in block["data"]
+        ]
+        # If user ID is not found in any block
+        if user_id not in [block["data"]["user_id"] for block in valid_blocks]:
+            response = "User ID not found in chain"
+            return response
+        # Get blocks that match the user ID
+        blocks = [
+            block for block in valid_blocks if block["data"]["user_id"] == user_id
+        ]
+        # Return blocks
+        return blocks
 
     # Function for test blockchain
     def test(self):
         # Create new block
         self.create_block(
             proof=self.proof_of_work(self.get_previous_block()["proof"]),
-            data={"user_id": "nID", "operation_type": "buy", "stock_name": "AAPL", "quantity": 10, "price": 150.00},
+            data={
+                "user_id": "nID",
+                "operation_type": "buy",
+                "stock_name": "AAPL",
+                "quantity": 10,
+                "price": 150.00,
+            },
             previous_hash=self.get_previous_hash(),
         )
 
         # Create new block
         self.create_block(
             proof=self.proof_of_work(self.get_previous_block()["proof"]),
-            data={"user_id": "nID", "operation_type": "buy", "stock_name": "AAPL", "quantity": 10, "price": 150.00},
+            data={
+                "user_id": "nID",
+                "operation_type": "buy",
+                "stock_name": "AAPL",
+                "quantity": 10,
+                "price": 150.00,
+            },
             previous_hash=self.get_previous_hash(),
         )
 
         # Create new block
         self.create_block(
             proof=self.proof_of_work(self.get_previous_block()["proof"]),
-            data={"user_id": "nID", "operation_type": "sell", "stock_name": "AAPL", "quantity": 10, "price": 150.00},
+            data={
+                "user_id": "nID",
+                "operation_type": "sell",
+                "stock_name": "AAPL",
+                "quantity": 10,
+                "price": 150.00,
+            },
             previous_hash=self.get_previous_hash(),
         )
 
