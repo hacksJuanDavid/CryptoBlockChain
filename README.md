@@ -35,38 +35,38 @@ Durante el desarrollo del proyecto, se empleará y documentará la metodología 
         [x] El servidor debe verificar y confirmar la integridad de todo el libro mayor a solicitud del cliente.
 
     Conexion
-        [] El servidor debe de generar una conexion utilizando sockets
-        [] El servidor debe de permitir conectar a los clientes mediante la exposicion del socket
+        [x] El servidor debe de generar una conexion utilizando sockets
+        [x] El servidor debe de permitir conectar a los clientes mediante la exposicion del socket
 ```
 
 ## Cliente
 
 ```
     Manejo de Claves
-        [] El cliente debe solicitar y almacenar la clave pública del servidor.
-        [] El cliente debe generar su propio par de claves pública-privada para la comunicación segura.
+        [x] El cliente debe solicitar y almacenar la clave pública del servidor.
+        []x El cliente debe generar su propio par de claves pública-privada para la comunicación segura.
 
     Registro
-        [] El cliente debe enviar una solicitud de registro al servidor cifrada con la clave pública del servidor, incluyendo la clave pública del cliente.
-        [] El cliente debe recibir y almacenar el ID de usuario asignado por el servidor.
+        [x] El cliente debe enviar una solicitud de registro al servidor cifrada con la clave pública del servidor, incluyendo la clave pública del cliente.
+        [x] El cliente debe recibir y almacenar el ID de usuario asignado por el servidor.
 
     Envío de Transacciones
-        [] La solicitud de registro de transacciones requiere que el cliente se haya registrado.
-        [] El cliente debe enviar órdenes de compra de acciones cifradas con la clave pública del servidor, a partir de información en formato JSON.
-        [] Las transacciones se basarán en el número de ID del cliente, el tipo de operación (compra/venta) y el nombre de la acción.
-        [] El cliente debe asegurar que las transacciones se transmitan de manera segura.
+        [x] La solicitud de registro de transacciones requiere que el cliente se haya registrado.
+        [x] El cliente debe enviar órdenes de compra de acciones cifradas con la clave pública del servidor, a partir de información en formato JSON.
+        [x] Las transacciones se basarán en el número de ID del cliente, el tipo de operación (compra/venta) y el nombre de la acción.
+        [x] El cliente debe asegurar que las transacciones se transmitan de manera segura.
 
     Verificación del Libro Mayor
-        [] El cliente puede solicitar y recibir una copia de sus propias transacciones.
-        [] El cliente puede solicitar una verificación de la integridad de todo el libro mayor.
+        [x] El cliente puede solicitar y recibir una copia de sus propias transacciones.
+        [x] El cliente puede solicitar una verificación de la integridad de todo el libro mayor.
 ```
 
 ## Requisitos No Funcionales
 
 ```
     Seguridad
-        [] El sistema debe usar algoritmos criptográficos fuertes para la generación y el cifrado de claves.
-        [] Todas las comunicaciones entre clientes y el servidor deben estar cifradas.
+        [x] El sistema debe usar algoritmos criptográficos fuertes para la generación y el cifrado de claves.
+        [x] Todas las comunicaciones entre clientes y el servidor deben estar cifradas.
 
     Rendimiento
         [] El servidor debe manejar peticiones de múltiples de clientes.
@@ -75,30 +75,30 @@ Durante el desarrollo del proyecto, se empleará y documentará la metodología 
         [] El servidor puede emplear un sistema de archivos o un SMBD para el almacenamiento del libro.
 
     Usabilidad
-        [] El cliente debe tener una interfaz CLI, que soporte la adecuada operación.
-        [] Los nombres de comandos sugeridos para el cliente son: getKey register add copy verify
-        [] El cliente y el servidor deben proporcionar mensajes de error claros y retroalimentación a la operación.
+        [x] El cliente debe tener una interfaz CLI, que soporte la adecuada operación.
+        [x] Los nombres de comandos sugeridos para el cliente son: getKey register add copy verify
+        [x] El cliente y el servidor deben proporcionar mensajes de error claros y retroalimentación a la operación.
 ```
 
 ## Restricciones Tecnológicas
 
 ```
     Seguridad
-        El sistema debe usar algoritmos criptográficos fuertes para la generación y el cifrado de claves.
-        Todas las comunicaciones entre clientes y el servidor deben estar cifradas.
+        [x] El sistema debe usar algoritmos criptográficos fuertes para la generación y el cifrado de claves.
+        [x] Todas las comunicaciones entre clientes y el servidor deben estar cifradas.
 
     Lenguaje de Programación
-        Se usará Python como lenguaje de programación, bajo el paradigma POO.
-        La comunicación entre cliente y servidor estará basada en sockets.
-        Está permitido el uso de librerias en Python que generen valor al proyecto.
+        [x] Se usará Python como lenguaje de programación, bajo el paradigma POO.
+        [x] La comunicación entre cliente y servidor estará basada en sockets.
+        [x] Está permitido el uso de librerias en Python que generen valor al proyecto.
 ```
 
 ## Restricciones de Calidad del Servicio
 
 ```
     Confiabilidad
-        El servidor debe asegurar la integridad del libro mayor basado en blockchain.
-        El servidor debe velar por la confidencialidad en las operaciones realizdas por los clientes.
+        [x] El servidor debe asegurar la integridad del libro mayor basado en blockchain.
+        [x] El servidor debe velar por la confidencialidad en las operaciones realizdas por los clientes.
 ```
 
 ## Contenido del Blockchain
@@ -128,17 +128,25 @@ El blockchain almacenará cada bloque con una estructura similar a la ilustrada 
 ```
 
 ## Generate init py
+
 ```
 touch /home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/generateKeys/__init__.py
 ```
 
-## Command generate relative imports in python form root folder CryptoBlockchain
+## Commands for generate keys in client and server
 
 ```
 python3 -m server.generateKeys.privateKey
 python3 -m server.generateKeys.publicKey
-python3 -m server.users.registerUser
-python3 -m server.cryptography.cryptography
-python3 -m server.interface.manager
 
+python3 -m client.generateKeys.privateKey
+python3 -m client.generateKeys.publicKey
+```
+
+## Commands for run
+
+```
+python3 -m server.sockets.configServer
+
+python3 -m client.sockets.configServer
 ```
