@@ -14,26 +14,22 @@ class LoginUser:
     def login_user(self, user_email, user_password):
         # Encrypt the input email and password
         encrypted_email = self.cryptography.hash_email(user_email)
-
         # Get user by email
         user = self.users.get_user_by_email(encrypted_email)
-
         # If user not found
         if user is None:
             print("User not found")
             return False
-
         # Verify the password by hashing
         password_hash = user.get("user_password")
         verified = self.cryptography.verify_hash_password(user_password, password_hash)
-
         # Verify the password by hashing
         if verified:
-            print("User logged in successfully")
+            response = "User logged in successfully"
             return user.get("user_uuid")
         else:
-            print("Incorrect password")
-            return False
+            response = "Incorrect password"
+            return response
 
     # Function to test
     def test(self):

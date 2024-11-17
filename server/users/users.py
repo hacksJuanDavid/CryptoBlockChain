@@ -9,11 +9,6 @@ class User:
 
     # Function to get list of users
     def get_users(self):
-        # Print list of users
-        print("List of users:")
-        # Print list of users
-        for user in self.users:
-            print(user)
         return self.users
 
     # Function to add user

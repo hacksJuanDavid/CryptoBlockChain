@@ -10,7 +10,7 @@ class RegisterUser:
         # Instance of users
         self.users = users
         # Instance of PublicKey
-        self.public_key = PublicKey()
+        self.public_key_server = PublicKey()
         # Instance of Cryptography
         self.cryptography = Cryptography()
 
@@ -21,30 +21,28 @@ class RegisterUser:
     # Function register user
     def register_user(self, user_name, user_email, user_password):
         # Encrypt data
-        encrypted_name = self.cryptography.encrypt_data(user_name)
+        encrypted_name = self.cryptography.encrypt_data_server(user_name)
         encrypted_email = self.cryptography.hash_email(user_email)
         encrypted_password = self.cryptography.hash_password(user_password)
-
         # Check email exist in users
         user = self.users.get_user_by_email(encrypted_email)
-
         # If exist user return False
         if user is not None:
-            print("User already exist")
-            return False
-
+            response = "User already exist"
+            return response
         # Save user
         self.users.add_user(
             {
                 "user_name": encrypted_name,
                 "user_email": encrypted_email,
                 "user_password": encrypted_password,
-                "user_public_key": self.public_key.get_public_key(),
+                "user_public_key": self.public_key_server.get_public_key_server(),
                 "user_uuid": self.generate_uuid(),
             }
         )
-        print("User created with success")
-        return True
+        # Response
+        response = "User created with success"
+        return response
 
     # Function to test
     def test(self):
