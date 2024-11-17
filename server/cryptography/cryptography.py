@@ -9,37 +9,79 @@ from server.generateKeys.privateKey import PrivateKey
 class Cryptography:
     # Constructor
     def __init__(self):
-        # Instance of public key
-        self.public_key = PublicKey().get_public_key()
-        # Instance of private key
-        self.private_key = PrivateKey().get_private_key()
+        # Instance of public key client
+        self.public_key_client = PublicKey().get_public_key_client()
+        # Instance of public key server
+        self.public_key_server = PublicKey().get_public_key_server()
+        # Instance of private key server
+        self.private_key_server = PrivateKey().get_private_key_server()
 
-    # Function for encrypt data
-    def encrypt_data(self, data):
+    # Function for encrypt data server
+    def encrypt_data_server(self, data):
         # Check if data is already bytes; if not, encode to bytes
         if not isinstance(data, bytes):
             data = data.encode("utf-8")
-        # Encrypt data
-        return self.public_key.encrypt(
-            data,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None,
-            ),
-        )
+        # Maximum size for RSA encryption (depends on key size and padding)
+        max_chunk_size = self.public_key_server.key_size // 8 - 2 * 32 - 2    
+        # Split data into chunks and encrypt each chunk
+        encrypted_data = b''
+        for i in range(0, len(data), max_chunk_size):
+            chunk = data[i:i + max_chunk_size]
+            encrypted_chunk = self.public_key_server.encrypt(
+                chunk,
+                padding.OAEP(
+                    mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                    algorithm=hashes.SHA256(),
+                    label=None,
+                ),
+            )
+            encrypted_data += encrypted_chunk
+        # Return encrypted data as bytes    
+        return encrypted_data
 
-    # Function for decrypt data
-    def decrypt_data(self, data):
-        # decrypt data
-        return self.private_key.decrypt(
-            data,
-            padding.OAEP(
-                mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                algorithm=hashes.SHA256(),
-                label=None,
-            ),
-        ).decode("utf-8")
+
+    # Function for decrypt data server
+    def decrypt_data_server(self, data):
+        # Decrypt data in chunks
+        decrypted_data = b''
+        chunk_size = self.private_key_server.key_size // 8
+        for i in range(0, len(data), chunk_size):
+            chunk = data[i:i + chunk_size]
+            decrypted_chunk = self.private_key_server.decrypt(
+                chunk,
+                padding.OAEP(
+                    mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                    algorithm=hashes.SHA256(),
+                    label=None,
+                ),
+            )
+            decrypted_data += decrypted_chunk
+
+        return decrypted_data.decode("utf-8")
+
+    # Function for encrypt data client
+    def encrypt_data_client(self, data):
+        # Check if data is already bytes; if not, encode to bytes
+        if not isinstance(data, bytes):
+            data = data.encode("utf-8")
+        # Maximum size for RSA encryption (depends on key size and padding)
+        max_chunk_size = self.public_key_client.key_size // 8 - 2 * 32 - 2
+        # Split data into chunks and encrypt each chunk
+        encrypted_data = b''
+        for i in range(0, len(data), max_chunk_size):
+            chunk = data[i:i + max_chunk_size]
+            encrypted_chunk = self.public_key_client.encrypt(
+                chunk,
+                padding.OAEP(
+                    mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                    algorithm=hashes.SHA256(),
+                    label=None,
+                ),
+            )
+            encrypted_data += encrypted_chunk
+        # Return encrypted data as bytes    
+        return encrypted_data   
+
 
     # Function for hash email
     def hash_email(self, email):
@@ -60,9 +102,8 @@ class Cryptography:
     # Function to test
     def test(self):
         # Encrypt data and print result
-        print(self.encrypt_data("Hello world"))
-        # Decrypt data and print result
-        print(self.decrypt_data(self.encrypt_data("Hello world")))
+        print(self.encrypt_data_server("Hello world"))
+
         # Hash email and print result
         print(self.hash_email("7V2tE@example.com"))
         # Verify hash email and print result
@@ -75,6 +116,12 @@ class Cryptography:
         print(self.hash_password("password"))
         # Verify hash password and print result
         print(self.verify_hash_password("password", self.hash_password("password")))
+
+        # Encrypt data and print result
+        print(self.encrypt_data_client("Hello world"))
+
+        # Decrypt data and print result
+        print(self.decrypt_data_server(self.encrypt_data_server("Hello world")))
 
 
 # Run test if script is executed directly
