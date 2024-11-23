@@ -21,10 +21,8 @@ class Cryptography:
         # Check if data is already bytes; if not, encode to bytes
         if not isinstance(data, bytes):
             data = data.encode("utf-8")
-
         # Maximum size for RSA encryption (depends on key size and padding)
         max_chunk_size = self.public_key_client.key_size // 8 - 2 * 32 - 2
-
         # Split data into chunks and encrypt each chunk
         encrypted_data = b''
         for i in range(0, len(data), max_chunk_size):
@@ -38,7 +36,7 @@ class Cryptography:
                 ),
             )
             encrypted_data += encrypted_chunk
-
+        # Return encrypted data as bytes    
         return encrypted_data
 
     # Function to decrypt data client
@@ -57,7 +55,7 @@ class Cryptography:
                 ),
             )
             decrypted_data += decrypted_chunk
-
+        # Return decrypted data as string
         return decrypted_data.decode("utf-8")
 
     # Function to encrypt data server (handling large data)
@@ -65,10 +63,8 @@ class Cryptography:
         # Check if data is already bytes; if not, encode to bytes
         if not isinstance(data, bytes):
             data = data.encode("utf-8")
-
         # Maximum size for RSA encryption (depends on key size and padding)
         max_chunk_size = self.public_key_server.key_size // 8 - 2 * 32 - 2
-
         # Split data into chunks and encrypt each chunk
         encrypted_data = b''
         for i in range(0, len(data), max_chunk_size):
@@ -82,7 +78,7 @@ class Cryptography:
                 ),
             )
             encrypted_data += encrypted_chunk
-
+        # Return encrypted data as bytes
         return encrypted_data
 
     # Function to test
