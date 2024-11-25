@@ -1,4 +1,3 @@
-import hashlib
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from client.generateKeys.publicKey import PublicKey
@@ -24,9 +23,9 @@ class Cryptography:
         # Maximum size for RSA encryption (depends on key size and padding)
         max_chunk_size = self.public_key_client.key_size // 8 - 2 * 32 - 2
         # Split data into chunks and encrypt each chunk
-        encrypted_data = b''
+        encrypted_data = b""
         for i in range(0, len(data), max_chunk_size):
-            chunk = data[i:i + max_chunk_size]
+            chunk = data[i : i + max_chunk_size]
             encrypted_chunk = self.public_key_client.encrypt(
                 chunk,
                 padding.OAEP(
@@ -36,16 +35,16 @@ class Cryptography:
                 ),
             )
             encrypted_data += encrypted_chunk
-        # Return encrypted data as bytes    
+        # Return encrypted data as bytes
         return encrypted_data
 
     # Function to decrypt data client
     def decrypt_data_client(self, data):
         # Decrypt data in chunks
-        decrypted_data = b''
+        decrypted_data = b""
         chunk_size = self.private_key_client.key_size // 8
         for i in range(0, len(data), chunk_size):
-            chunk = data[i:i + chunk_size]
+            chunk = data[i : i + chunk_size]
             decrypted_chunk = self.private_key_client.decrypt(
                 chunk,
                 padding.OAEP(
@@ -66,9 +65,9 @@ class Cryptography:
         # Maximum size for RSA encryption (depends on key size and padding)
         max_chunk_size = self.public_key_server.key_size // 8 - 2 * 32 - 2
         # Split data into chunks and encrypt each chunk
-        encrypted_data = b''
+        encrypted_data = b""
         for i in range(0, len(data), max_chunk_size):
-            chunk = data[i:i + max_chunk_size]
+            chunk = data[i : i + max_chunk_size]
             encrypted_chunk = self.public_key_server.encrypt(
                 chunk,
                 padding.OAEP(
@@ -84,10 +83,11 @@ class Cryptography:
     # Function to test
     def test(self):
         # Encrypt data and print result
-        # print(self.encrypt_data_client("Hello world"))
+        print(self.encrypt_data_client("Hello world"))
+
         # Encrypt data client
         key_test_encrypt_client = self.encrypt_data_client(
-                """
+            """
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvUtse2rp38OXnlXXCzWu
 isYXbKYB9dQZ77+t6mwP810x+VxEW3T5tmgctjYfp9yE29y/IfxxGBbl/2EuRAtn
@@ -98,20 +98,18 @@ MnMKHCMBOTiJz1ZOUhPRkIRai4UklwyhbuEpsEHJyVSTYb+Zf9auKfTPaGGS5bm5
 8QIDAQAB
 -----END PUBLIC KEY-----
 """
-            )
+        )
         print(key_test_encrypt_client)
 
-
         # Decrypt data and print result
-        # print(self.decrypt_data_client(self.encrypt_data_client("Hello world")))
+        print(self.decrypt_data_client(self.encrypt_data_client("Hello world")))
+
         # Decrypt data client
-        key_test_decrypt_client = self.decrypt_data_client(
-            key_test_encrypt_client 
-        )
-        print(key_test_decrypt_client)  
+        key_test_decrypt_client = self.decrypt_data_client(key_test_encrypt_client)
+        print(key_test_decrypt_client)
 
         # Encrypt data and print result
-        #print(self.encrypt_data_server("Hello world"))
+        print(self.encrypt_data_server("Hello world"))
 
 
 # Run test if script is executed directly
