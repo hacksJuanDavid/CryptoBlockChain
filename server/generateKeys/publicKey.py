@@ -13,15 +13,34 @@ class PublicKey:
         # Generate the public key object (not bytes yet)
         self.public_key_server = self.private_key_server.public_key()
 
+    # Function to access to directory keys and file public_key_server.pem
+    def access_keys_server(self):
+        # Base dirt folder project
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        # Access to folder keys
+        keys_dir = os.path.join(base_dir, "..", "keys")
+        # Access to file public_key_server.pem
+        public_key_server_path = os.path.join(keys_dir, "public_key_server.pem")
+        # Return path
+        return public_key_server_path
+    
+    # Function to access to directory keys and file public_key_client.pem
+    def access_keys_client(self):
+        # Base dirt folder project
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        # Access to folder keys
+        keys_dir = os.path.join(base_dir, "..", "keys")
+        # Access to file public_key_client.pem
+        public_key_client_path = os.path.join(keys_dir, "public_key_client.pem")
+        # Return path
+        return public_key_client_path
+
     # Function save the public key server to a file
     def save_public_key_server(self):
-        # Path to save the public key file
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/keys",
-            "public_key_server.pem",
-        )
+        # Access to directory keys and file public_key_server.pem
+        public_key_server_path = self.access_keys_server()
         # Convert the public key to bytes and save it
-        with open(directory_path, "wb") as file:
+        with open(public_key_server_path, "wb") as file:
             file.write(
                 self.public_key_server.public_bytes(
                     encoding=serialization.Encoding.PEM,
@@ -43,12 +62,9 @@ class PublicKey:
             public_key_client_bytes, backend=default_backend()
         )
         # Path to save the public key file
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/keys",
-            "public_key_client.pem",
-        )
+        public_key_client_path = self.access_keys_client()
         # Save the public key to the file
-        with open(directory_path, "wb") as file:
+        with open(public_key_client_path, "wb") as file:
             file.write(
                 public_key_client_obj.public_bytes(
                     encoding=serialization.Encoding.PEM,
@@ -61,13 +77,10 @@ class PublicKey:
 
     # Function to get public server key from file
     def get_public_key_server(self):
-        # Path to the public key file
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/keys",
-            "public_key_server.pem",
-        )
+        # Access to directory keys and file public_key_server.pem
+        public_key_server_path = self.access_keys_server()
         # Load the public key from the file
-        with open(directory_path, "rb") as file:
+        with open(public_key_server_path, "rb") as file:
             public_key_server = serialization.load_pem_public_key(
                 file.read(), backend=default_backend()
             )
@@ -76,13 +89,10 @@ class PublicKey:
 
     # Function to get public key client from file
     def get_public_key_client(self):
-        # Path to the public key file
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/keys",
-            "public_key_client.pem",
-        )
+        # Access to directory keys and file public_key_client.pem
+        public_key_client_path = self.access_keys_client()
         # Load the public key from the file
-        with open(directory_path, "rb") as file:
+        with open(public_key_client_path, "rb") as file:
             public_key_client = serialization.load_pem_public_key(
                 file.read(), backend=default_backend()
             )
@@ -115,13 +125,10 @@ class PublicKey:
 
     # Function to check if the public key client is valid and exists
     def check_public_key_client(self):
-        # Path to the public key file
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/keys",
-            "public_key_client.pem",
-        )
+        # Access to directory keys and file public_key_client.pem
+        public_key_client_path = self.access_keys_client()
         # Check if the file exists
-        if os.path.exists(directory_path):
+        if os.path.exists(public_key_client_path):
             return True
         else:
             return False

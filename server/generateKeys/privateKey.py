@@ -13,15 +13,23 @@ class PrivateKey:
             public_exponent=65537, key_size=2048, backend=default_backend()
         )
 
+    # Function to access to directory keys and file private_key_server.pem
+    def access_keys_server(self):
+        # Base dirt folder project
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        # Access to folder keys
+        keys_dir = os.path.join(base_dir, "..", "keys")
+        # Access to file private_key_server.pem
+        private_key_server_path = os.path.join(keys_dir, "private_key_server.pem")
+        # Return path
+        return private_key_server_path
+
     # Function to save private key server in a file
     def save_private_key_server(self, private_key_server):
-        # Path folder
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/keys",
-            "private_key_server.pem",
-        )
+        # Access to file private_key_server.pem
+        private_key_server_path = self.access_keys_server()
         # Save private key in a file
-        with open(directory_path, "wb") as file:
+        with open(private_key_server_path, "wb") as file:
             file.write(
                 private_key_server.private_bytes(
                     encoding=serialization.Encoding.PEM,
@@ -35,13 +43,10 @@ class PrivateKey:
 
     # Function to get private key server from a file
     def get_private_key_server(self):
-        # Path folder
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/server/keys",
-            "private_key_server.pem",
-        )
+        # Access to file private_key_server.pem
+        private_key_server_path = self.access_keys_server()
         # Load private key
-        with open(directory_path, "rb") as file:
+        with open(private_key_server_path, "rb") as file:
             private_key = serialization.load_pem_private_key(
                 file.read(), password=None, backend=default_backend()
             )
