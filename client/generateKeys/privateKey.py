@@ -13,15 +13,23 @@ class PrivateKey:
             public_exponent=65537, key_size=2048, backend=default_backend()
         )
 
+    # Function to access to directory keys and file private_key_client.pem
+    def access_keys_client(self):
+        # Base dirt folder project
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        # Access to folder keys
+        keys_dir = os.path.join(base_dir, "..", "keys")
+        # Access to file private_key_client.pem
+        private_key_client_path = os.path.join(keys_dir, "private_key_client.pem")
+        # Return path
+        return private_key_client_path
+
     # Function to save private key in a file
     def save_private_key_client(self, private_key_client):
-        # Path folder
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/client/keys",
-            "private_key_client.pem",
-        )
+        # Access to file private_key_client.pem
+        private_key_client_path = self.access_keys_client()
         # Save private key
-        with open(directory_path, "wb") as file:
+        with open(private_key_client_path, "wb") as file:
             file.write(
                 private_key_client.private_bytes(
                     encoding=serialization.Encoding.PEM,
@@ -30,18 +38,15 @@ class PrivateKey:
                 )
             )
         # Return response
-        response = "Private key saved in private_key.pem"
+        response = "Private key saved in private_key_client.pem"
         return response
 
     # Function to get private key
     def get_private_key_client(self):
-        # Path folder
-        directory_path = os.path.join(
-            "/home/hacksjuanda/Desktop/ProjectsDeveloment/CryptoBlockChain/client/keys",
-            "private_key_client.pem",
-        )
+        # Access to file private_key_client.pem
+        private_key_client_path = self.access_keys_client()
         # Load private key
-        with open(directory_path, "rb") as file:
+        with open(private_key_client_path, "rb") as file:
             private_key = serialization.load_pem_private_key(
                 file.read(), password=None, backend=default_backend()
             )
