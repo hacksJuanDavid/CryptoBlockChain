@@ -91,6 +91,9 @@ class PublicKey:
     def get_public_key_client(self):
         # Access to directory keys and file public_key_client.pem
         public_key_client_path = self.access_keys_client()
+        # If not exist file return message not exist need to create
+        if not os.path.exists(public_key_client_path):
+            return "Public key client not exist need to create"
         # Load the public key from the file
         with open(public_key_client_path, "rb") as file:
             public_key_client = serialization.load_pem_public_key(
