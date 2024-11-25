@@ -147,9 +147,9 @@ python3 -m client.generateKeys.publicKey
 ## Commands for run
 
 ```
-python3 -m server.confi.configServer
+python3 -m server.config.configServer
 
-python3 -m client.confi.configServer
+python3 -m client.config.configServer
 ```
 
 ## Config venv python server and client
