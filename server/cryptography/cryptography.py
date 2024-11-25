@@ -22,11 +22,11 @@ class Cryptography:
         if not isinstance(data, bytes):
             data = data.encode("utf-8")
         # Maximum size for RSA encryption (depends on key size and padding)
-        max_chunk_size = self.public_key_server.key_size // 8 - 2 * 32 - 2    
+        max_chunk_size = self.public_key_server.key_size // 8 - 2 * 32 - 2
         # Split data into chunks and encrypt each chunk
-        encrypted_data = b''
+        encrypted_data = b""
         for i in range(0, len(data), max_chunk_size):
-            chunk = data[i:i + max_chunk_size]
+            chunk = data[i : i + max_chunk_size]
             encrypted_chunk = self.public_key_server.encrypt(
                 chunk,
                 padding.OAEP(
@@ -36,17 +36,16 @@ class Cryptography:
                 ),
             )
             encrypted_data += encrypted_chunk
-        # Return encrypted data as bytes    
+        # Return encrypted data as bytes
         return encrypted_data
-
 
     # Function for decrypt data server
     def decrypt_data_server(self, data):
         # Decrypt data in chunks
-        decrypted_data = b''
+        decrypted_data = b""
         chunk_size = self.private_key_server.key_size // 8
         for i in range(0, len(data), chunk_size):
-            chunk = data[i:i + chunk_size]
+            chunk = data[i : i + chunk_size]
             decrypted_chunk = self.private_key_server.decrypt(
                 chunk,
                 padding.OAEP(
@@ -56,7 +55,7 @@ class Cryptography:
                 ),
             )
             decrypted_data += decrypted_chunk
-
+        # Return decrypted data as string
         return decrypted_data.decode("utf-8")
 
     # Function for encrypt data client
@@ -67,9 +66,9 @@ class Cryptography:
         # Maximum size for RSA encryption (depends on key size and padding)
         max_chunk_size = self.public_key_client.key_size // 8 - 2 * 32 - 2
         # Split data into chunks and encrypt each chunk
-        encrypted_data = b''
+        encrypted_data = b""
         for i in range(0, len(data), max_chunk_size):
-            chunk = data[i:i + max_chunk_size]
+            chunk = data[i : i + max_chunk_size]
             encrypted_chunk = self.public_key_client.encrypt(
                 chunk,
                 padding.OAEP(
@@ -79,9 +78,8 @@ class Cryptography:
                 ),
             )
             encrypted_data += encrypted_chunk
-        # Return encrypted data as bytes    
-        return encrypted_data   
-
+        # Return encrypted data as bytes
+        return encrypted_data
 
     # Function for hash email
     def hash_email(self, email):
@@ -106,6 +104,7 @@ class Cryptography:
 
         # Hash email and print result
         print(self.hash_email("7V2tE@example.com"))
+
         # Verify hash email and print result
         print(
             self.verify_hash_email(
@@ -114,6 +113,7 @@ class Cryptography:
         )
         # Hash password and print result
         print(self.hash_password("password"))
+
         # Verify hash password and print result
         print(self.verify_hash_password("password", self.hash_password("password")))
 

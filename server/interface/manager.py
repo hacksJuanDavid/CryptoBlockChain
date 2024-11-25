@@ -1,20 +1,20 @@
-from server.users.users import User
-from server.users.loginUser import LoginUser
-from server.users.registerUser import RegisterUser
-from server.blockchain.blockchain import Blockchain
-from server.transactions.transactions import Transactions
+from server.services.usersService import UsersService
+from server.authentication.loginUser import LoginUser
+from server.authentication.registerUser import RegisterUser
+from server.services.blockchainService import BlockchainService
+from server.services.transactionsService import TransactionsService
 from server.generateKeys.publicKey import PublicKey
 
 
 # Class for manage users
 class Manager:
     def __init__(self):
-        self.users = User()
-        self.blockchain = Blockchain()
-        self.public_key_server = PublicKey()
-        self.login_user = LoginUser(self.users)
-        self.register_user = RegisterUser(self.users)
-        self.transactions = Transactions(self.blockchain)
+        self.users = UsersService()  # Instance of users
+        self.blockchain = BlockchainService()  # Instance of blockchain
+        self.public_key_server = PublicKey()  # Instance of public key server
+        self.login_user = LoginUser()  # Instance of login user
+        self.register_user = RegisterUser()  # Instance of register user
+        self.transactions = TransactionsService()  # Instance of transactions
         self.authenticated_user = None  # Track logged-in user
 
     # Function for get public key server
@@ -43,7 +43,6 @@ class Manager:
         message = self.register_user.register_user(user_name, user_email, user_password)
         # Response success
         response = {"status": "success", "message": message}
-
         # Return response
         return response
 
@@ -60,7 +59,6 @@ class Manager:
         else:
             # Response error
             response = {"status": "error", "message": message}
-
         # Return response
         return response
 
@@ -86,7 +84,6 @@ class Manager:
                 "exit": "Exit",
             },
         }
-
         # Return response
         return response
 
