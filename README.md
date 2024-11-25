@@ -44,7 +44,8 @@ Durante el desarrollo del proyecto, se empleará y documentará la metodología 
 ```
     Manejo de Claves
         [x] El cliente debe solicitar y almacenar la clave pública del servidor.
-        []x El cliente debe generar su propio par de claves pública-privada para la comunicación segura.
+        [x] El cliente debe generar su propio par de claves pública-privada para la comunicación segura.
+        [x] El cliente envia su clave publica al servidor para encriptar la informacion desde el server hacia el cliente.
 
     Registro
         [x] El cliente debe enviar una solicitud de registro al servidor cifrada con la clave pública del servidor, incluyendo la clave pública del cliente.
@@ -69,10 +70,10 @@ Durante el desarrollo del proyecto, se empleará y documentará la metodología 
         [x] Todas las comunicaciones entre clientes y el servidor deben estar cifradas.
 
     Rendimiento
-        [] El servidor debe manejar peticiones de múltiples de clientes.
+        [x] El servidor debe manejar peticiones de múltiples de clientes.
 
     Persistencia
-        [] El servidor puede emplear un sistema de archivos o un SMBD para el almacenamiento del libro.
+        [x] El servidor puede emplear un sistema de archivos o un SMBD para el almacenamiento del libro.
 
     Usabilidad
         [x] El cliente debe tener una interfaz CLI, que soporte la adecuada operación.
@@ -146,7 +147,138 @@ python3 -m client.generateKeys.publicKey
 ## Commands for run
 
 ```
-python3 -m server.sockets.configServer
+python3 -m server.confi.configServer
 
-python3 -m client.sockets.configServer
+python3 -m client.confi.configServer
+```
+
+## Config venv python server and client
+
+```
+python3 -m venv server_venv
+python3 -m venv client_venv
+
+source server_venv/bin/activate
+source client_venv/bin/activate
+desactivate
+```
+
+## Command for generate pip requeriments
+
+```
+pip freeze > requirements.txt
+```
+
+## Install pip requeriments
+
+```
+pip install -r requirements.txt
+```
+
+## Architecture server
+
+```
+.
+├── authentication
+│   ├── __init__.py
+│   ├── loginUser.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-312.pyc
+│   │   ├── loginUser.cpython-312.pyc
+│   │   ├── registerUser.cpython-312.pyc
+│   │   └── users.cpython-312.pyc
+│   └── registerUser.py
+├── config
+│   ├── configDatabase.py
+│   ├── configServer.py
+│   └── __pycache__
+│       ├── configDatabase.cpython-312.pyc
+│       └── configServer.cpython-312.pyc
+├── cryptography
+│   ├── cryptography.py
+│   ├── __init__.py
+│   └── __pycache__
+│       ├── cryptography.cpython-312.pyc
+│       └── __init__.cpython-312.pyc
+├── data
+│   └── database.db
+├── generateKeys
+│   ├── __init__.py
+│   ├── privateKey.py
+│   ├── publicKey.py
+│   └── __pycache__
+│       ├── generatePrivateKey.cpython-312.pyc
+│       ├── generatePublicKey.cpython-312.pyc
+│       ├── __init__.cpython-312.pyc
+│       ├── privateKey.cpython-312.pyc
+│       └── publicKey.cpython-312.pyc
+├── interface
+│   ├── __init__.py
+│   ├── manager.py
+│   └── __pycache__
+│       ├── __init__.cpython-312.pyc
+│       └── manager.cpython-312.pyc
+├── keys
+│   ├── private_key_server.pem
+│   ├── public_key_client.pem
+│   └── public_key_server.pem
+├── models
+│   ├── bagActionModel.py
+│   ├── blockchainModel.py
+│   ├── __pycache__
+│   │   ├── bagActionModel.cpython-312.pyc
+│   │   ├── blockchainModel.cpython-312.pyc
+│   │   └── userModel.cpython-312.pyc
+│   └── userModel.py
+├── __pycache__
+│   ├── app.cpython-312.pyc
+│   └── __init__.cpython-312.pyc
+├── repositories
+│   ├── bagActionRepository.py
+│   ├── blockchainRepository.py
+│   ├── __pycache__
+│   │   ├── bagActionRepository.cpython-312.pyc
+│   │   ├── blockchainRepository.cpython-312.pyc
+│   │   └── userRepository.cpython-312.pyc
+│   └── userRepository.py
+├── requirements.txt
+└── services
+    ├── blockchainService.py
+    ├── __pycache__
+    │   ├── blockchainService.cpython-312.pyc
+    │   ├── transactionsService.cpython-312.pyc
+    │   └── usersService.cpython-312.pyc
+    ├── transactionsService.py
+    └── usersService.py
+
+20 directories, 52 files
+```
+
+## Architecture for Client
+
+```
+.
+├── config
+│   ├── configServer.py
+│   └── __pycache__
+│       └── configServer.cpython-312.pyc
+├── cryptography
+│   ├── cryptography.py
+│   └── __pycache__
+│       └── cryptography.cpython-312.pyc
+├── generateKeys
+│   ├── privateKey.py
+│   ├── publicKey.py
+│   └── __pycache__
+│       ├── privateKey.cpython-312.pyc
+│       └── publicKey.cpython-312.pyc
+├── keys
+│   ├── private_key_client.pem
+│   ├── public_key_client.pem
+│   └── public_key_server.pem
+├── __pycache__
+│   └── app.cpython-312.pyc
+└── requirements.txt
+
+9 directories, 13 files
 ```
