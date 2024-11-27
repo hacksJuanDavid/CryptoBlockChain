@@ -20,9 +20,9 @@ class Manager:
     # Function for get public key server
     def get_public_key_server(self):
         # Get public key from server
-        public_key = self.public_key_server.display_public_key_server()
+        public_key_server = self.public_key_server.display_public_key_server()
         # Response public key
-        response = {"status": "success", "public_key": public_key}
+        response = {"status": "success", "public_key_server": public_key_server}
         # Return response
         return response
 
@@ -33,7 +33,7 @@ class Manager:
             public_key_client
         )
         # Response
-        response = {"status": "success", "message": public_key_client}
+        response = {"status": "success", "public_key_client": public_key_client}
         # Return response
         return response
 
@@ -80,8 +80,8 @@ class Manager:
                 "my_bag_actions": "Show my bag actions",
                 "buy_action": "Buy an action",
                 "sell_action": "Sell an action",
-                "help": "Show help",
-                "exit": "Exit",
+                "help": "Show help with list of commands",
+                "exit": "Exit the program",
             },
         }
         # Return response
@@ -127,7 +127,7 @@ class Manager:
         # Set public key client command
         elif command == "set_public_key_client":
             # Get public key
-            public_key_client = data.get("public_key")
+            public_key_client = data.get("public_key_client")
             # Set public key
             response = self.set_public_key_client(public_key_client)
         # Exit command
